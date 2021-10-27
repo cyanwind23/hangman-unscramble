@@ -68,7 +68,7 @@ def init_main_screen():
     y = cfg.WIN_HEIGHT / 2
     main_screen.append(Button(x, y, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "HANGMAN", HANGMAN_SCREEN))
     main_screen.append(Button(x + btn_width + btn_gap, y, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "SCRAMBLE", SCRAMBLE_SCREEN))
-    main_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, cfg.WIN_HEIGHT / 2 - 75, cfg.color.BLACK, TEXT_FONT, "WELLCOME TO PYGAME"))
+    main_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, cfg.WIN_HEIGHT / 2 - 75, cfg.color.BLACK, TEXT_FONT, "WELCOME TO PYGAME"))
     
     return main_screen
 
@@ -106,7 +106,7 @@ def init_hangman_screen():
     btn_height = 50
     y = 20
     hangman_screen = []
-    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELLCOME TO HANGMAN"))
+    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELCOME TO HANGMAN"))
     hangman_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
     hangman_screen.append(Image(100, 100, pygame.image.load(cfg.IMG_PATH + f"hangman{hangman_status}.png")))
     hangman_screen.append(update_hangman_guessed())
@@ -136,7 +136,7 @@ def init_scramble_screen():
     y = 20
     scramble_screen = []
     scramble_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
-    scramble_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELLCOME TO SCRAMBLE"))
+    scramble_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELCOME TO SCRAMBLE"))
     scramble_screen.append(update_scramble_guessed())
     scramble_screen.append(Label(50, 200, cfg.color.BLACK, TEXT_FONT, "HINT: " + scramble_hint))
     scramble_screen.append(Button(cfg.WIN_WIDTH - btn_width - 20, 300, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "DELETE", SCRAMBLE_SCREEN))
