@@ -1,5 +1,4 @@
 import pygame
-from pygame.constants import SRCALPHA
 import cfg
 from model.components import Button, CircleButton, Image, Label
 import random
