@@ -33,7 +33,7 @@ scramble_selected_btn = []
 # def functions here
 def load_words():
     global word_bank
-    with open("words2.txt") as f:
+    with open("words.txt") as f:
         for line in f:        
             words = line.split("!")
             for word in words:
