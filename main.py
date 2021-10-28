@@ -1,13 +1,13 @@
 import pygame
 import cfg
 from model.components import Button, CircleButton, Image, Label
-from random import shuffle, choice
+import random
 
 pygame.init()
 
 # global variables
-TEXT_FONT = pygame.font.SysFont('comicsans', 28)
-BIG_TEXT_FONT = pygame.font.SysFont('comicsans', 54)
+TEXT_FONT = pygame.font.SysFont('comicsans', 20)
+BIG_TEXT_FONT = pygame.font.SysFont('comicsans', 40)
 window = None
 clock = None
 curr_screen = 0
@@ -18,6 +18,7 @@ HANGMAN_SCREEN = 1
 SCRAMBLE_SCREEN = 2
 FINAL_SCREEN = 3
 word_bank = []
+hint_bank = {}
 
 # Hangman screen variable
 hangman_status = 0
@@ -32,12 +33,13 @@ scramble_selected_btn = []
 
 # def functions here
 def load_words():
-    global word_bank
-    with open("words2.txt") as f:
-        for line in f:        
-            words = line.split("!")
-            for word in words:
-                word_bank.append(word.upper())
+    global word_bank, hint_bank
+    with open("words.txt") as f:
+        for line in f:
+            # split into two parts, word and description
+            word, hint = line.split(":")
+            hint_bank[word] = hint[:-1]
+            word_bank.append(word)
 
 
 def init_game():
@@ -45,7 +47,7 @@ def init_game():
     global clock
 
     window = pygame.display.set_mode((cfg.WIN_WIDTH, cfg.WIN_HEIGHT))
-    pygame.display.set_caption("Python Game")
+    pygame.display.set_caption("Python Game!")
     clock = pygame.time.Clock()
 
     load_words()
@@ -59,14 +61,14 @@ def init_game():
 def init_main_screen():
     # main screen 
     main_screen = []
-    btn_gap = 75
+    btn_gap = 50
     btn_width = 150
     btn_height = 50
     x = cfg.WIN_WIDTH / 2 - btn_width - btn_gap / 2
     y = cfg.WIN_HEIGHT / 2
-    main_screen.append(Button(240, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Hangman", HANGMAN_SCREEN))
-    main_screen.append(Button(570, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Unscamble", SCRAMBLE_SCREEN))
-    main_screen.append(Label(cfg.WIN_WIDTH / 2 - 54, y - 125, cfg.color.BLACK, BIG_TEXT_FONT, "Game"))
+    main_screen.append(Button(x, y, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "HANGMAN", HANGMAN_SCREEN))
+    main_screen.append(Button(x + btn_width + btn_gap, y, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "SCRAMBLE", SCRAMBLE_SCREEN))
+    main_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, cfg.WIN_HEIGHT / 2 - 75, cfg.color.BLACK, TEXT_FONT, "WELCOME TO PYGAME"))
     
     return main_screen
 
@@ -97,14 +99,14 @@ def update_scramble_guessed():
 def init_hangman_screen():
     global word_bank, hangman_status, hangman_ans, hangman_guessed
     hangman_status = 0
-    hangman_ans = choice(word_bank)
+    hangman_ans = random.choice(word_bank)
     hangman_guessed = []
 
     btn_width = 150
     btn_height = 50
     y = 20
     hangman_screen = []
-    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Hangman"))
+    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELCOME TO HANGMAN"))
     hangman_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
     hangman_screen.append(Image(100, 100, pygame.image.load(cfg.IMG_PATH + f"hangman{hangman_status}.png")))
     hangman_screen.append(update_hangman_guessed())
@@ -124,24 +126,24 @@ def init_hangman_screen():
 def init_scramble_screen():
     global word_bank, hint_bank, scramble_ans, scramble_hint, scramble_guessed
 
-    scramble_ans = choice(word_bank)
+    scramble_ans = random.choice(word_bank)
+    scramble_hint = hint_bank[scramble_ans]
     scramble_guessed = []
-
-    shuffle_word = list(scramble_ans)
-    shuffle(shuffle_word)
 
     btn_width = 150
     btn_height = 50
     
     y = 20
     scramble_screen = []
-    scramble_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Back", MAIN_SCREEN))
-    scramble_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Unscramble"))
+    scramble_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
+    scramble_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELCOME TO SCRAMBLE"))
     scramble_screen.append(update_scramble_guessed())
-    scramble_screen.append(Label(50, 200, cfg.color.BLACK, TEXT_FONT, "Hint: The word begins with " + scramble_ans[0]))
+    scramble_screen.append(Label(50, 200, cfg.color.BLACK, TEXT_FONT, "HINT: " + scramble_hint))
     scramble_screen.append(Button(cfg.WIN_WIDTH - btn_width - 20, 300, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "DELETE", SCRAMBLE_SCREEN))
 
     # create button
+    shuffle_word = list(scramble_ans)
+    random.shuffle(shuffle_word)
     radius = 20
     gap = 15
     startx = round((cfg.WIN_WIDTH - (radius * 2 + gap) * 13) / 2)
@@ -160,10 +162,9 @@ def init_final_screen(msg, from_screen):
     btn_height = 50
     x = cfg.WIN_WIDTH / 2 - btn_width - btn_gap / 2
     y = cfg.WIN_HEIGHT / 2
-    final_screen.append(Label(cfg.WIN_WIDTH / 2, cfg.WIN_HEIGHT / 2, cfg.color.BLACK, TEXT_FONT, "O"))
-    final_screen.append(Button(240, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Yes", from_screen))
-    final_screen.append(Button(570, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "No", MAIN_SCREEN))
-    final_screen.append(Label(cfg.WIN_WIDTH / 2 - 260, cfg.WIN_HEIGHT / 2 - 125, cfg.color.BLACK, TEXT_FONT, msg + " Do you want to play again?"))
+    final_screen.append(Button(x, y, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "YES", from_screen))
+    final_screen.append(Button(x + btn_width + btn_gap, y, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "NO", MAIN_SCREEN))
+    final_screen.append(Label(cfg.WIN_WIDTH / 2 - 100, cfg.WIN_HEIGHT / 2 - 75, cfg.color.BLACK, TEXT_FONT, msg + " AGAIN?"))
 
     return final_screen
 
@@ -208,15 +209,15 @@ def handle_on_click(x, y, screen):
         if won:
             draw()
             curr_screen = FINAL_SCREEN
-            screens[FINAL_SCREEN] = init_final_screen("You win. Thanks for playing!", HANGMAN_SCREEN)
+            screens[FINAL_SCREEN] = init_final_screen("YOU WON!", HANGMAN_SCREEN)
 
         if hangman_status == 6:
             draw()
             curr_screen = FINAL_SCREEN
-            screens[FINAL_SCREEN] = init_final_screen("You lose. Thanks for playing!", HANGMAN_SCREEN)
+            screens[FINAL_SCREEN] = init_final_screen("YOU LOST!", HANGMAN_SCREEN)
         
         if curr_screen == FINAL_SCREEN:
-            pygame.time.delay(500)
+            pygame.time.delay(1000)
     
     elif curr_screen == SCRAMBLE_SCREEN:
         for component in screen:
@@ -241,9 +242,9 @@ def handle_on_click(x, y, screen):
         if len(scramble_guessed) == len(scramble_ans):
             msg = ""
             if "".join(scramble_guessed) == scramble_ans:
-                msg = "You win. Thanks for playing!"
+                msg = "YOU WON!"
             else:
-                msg = "You lose, the word was " + scramble_ans + ". Thanks for playing!"
+                msg = "YOU LOST!"
             
             draw()
             curr_screen = FINAL_SCREEN

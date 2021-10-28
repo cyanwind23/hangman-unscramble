@@ -5,7 +5,7 @@ class color:
     GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
 
-WIN_HEIGHT = 540
-WIN_WIDTH = 960
+WIN_HEIGHT = 500
+WIN_WIDTH = 800
 FPS = 60
 IMG_PATH = "img/"
