@@ -104,7 +104,7 @@ def init_hangman_screen():
     btn_height = 50
     y = 20
     hangman_screen = []
-    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "WELCOME TO HANGMAN"))
+    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Hangman"))
     hangman_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
     hangman_screen.append(Image(100, 100, pygame.image.load(cfg.IMG_PATH + f"hangman{hangman_status}.png")))
     hangman_screen.append(update_hangman_guessed())
@@ -136,7 +136,7 @@ def init_scramble_screen():
     y = 20
     scramble_screen = []
     scramble_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Back", MAIN_SCREEN))
-    scramble_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Unscramble Game"))
+    scramble_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Unscramble"))
     scramble_screen.append(update_scramble_guessed())
     scramble_screen.append(Label(50, 200, cfg.color.BLACK, TEXT_FONT, "Hint: The word begins with " + scramble_ans[0]))
     scramble_screen.append(Button(cfg.WIN_WIDTH - btn_width - 20, 300, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "DELETE", SCRAMBLE_SCREEN))
