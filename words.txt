@@ -1,4 +1,1 @@
-DEVELOPER:A job 
-MATH:A subject 
-PYTHON:A programming language 
-PYGAME:A Python library 
+DEVELOPER!subject!programming!language!Python!library 
