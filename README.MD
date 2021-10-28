@@ -1,4 +1,4 @@
-# Hangman & Scramble Game using `Pygame`
+# Hangman & Unscramble game using `Pygame`
 - `cfg.py`: File cấu hình chung của game
 - `main.py`: File chạy game chính
 - `test.py`: File test
