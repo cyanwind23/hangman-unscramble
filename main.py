@@ -33,14 +33,12 @@ scramble_selected_btn = []
 
 # def functions here
 def load_words():
-    global word_bank, hint_bank
+    global word_bank
     with open("words.txt") as f:
-        for line in f:
-            # split into two parts, word and description
-            word, hint = line.split(":")
-            hint_bank[word] = hint[:-1]
-            word_bank.append(word)
-
+        for line in f:        
+            words = line.split("!")
+            for word in words:
+                word_bank.append(word.upper())
 
 def init_game():
     global window
