@@ -1,26 +1,38 @@
 import pygame
 import math
+from abc import ABC, abstractmethod
+from pygame import Surface
 
-class Component:
-    _x = 0
-    _y = 0
-    _visible = True
+from pygame.font import Font
+
+class Component(ABC):
+    _x : int
+    _y : int
+    _visible : bool
 
     def __init__(self, x, y) -> None:
         self._x = x
         self._y = y
         self._visible = True
 
+    @abstractmethod
     def onclick(self, x, y):
-        return False
+        pass
+
+    @abstractmethod
+    def draw(self, window):
+        pass
+
+    def set_visible(self, visible):
+        self._visible = visible
 
 class Button(Component):
-    _text = ""
-    _width = 0
-    _height = 0
-    _color = ()
-    _font = None
-    _intent = 0
+    _text : str
+    _width : int
+    _height : int
+    _color : tuple
+    _font : Font
+    _intent : int
 
     def __init__(self, x, y, width, height, color, font, text, intent) -> None:
         super().__init__(x, y)
@@ -46,13 +58,10 @@ class Button(Component):
     def get_intent(self):
         return self._intent
 
-    def set_visible(self, visible):
-        self._visible = visible
-
 class Label(Component):
-    __text = ""
-    __color = ()
-    __font = None
+    __text : str
+    __color : tuple
+    __font : Font
 
     def __init__(self, x, y, color, font, text) -> None:
         super().__init__(x, y)
@@ -68,8 +77,11 @@ class Label(Component):
     def get_text(self):
         return self.__text
     
+    def onclick(self, x, y):
+        return False
+    
 class CircleButton(Button):
-    __radius = 0
+    __radius : int
 
     def __init__(self, x, y, radius, color, font, text, intent) -> None:
         super().__init__(x, y, 0, 0, color, font, text, intent)
@@ -86,7 +98,7 @@ class CircleButton(Button):
 
 class Image(Component):
 
-    __img = None
+    __img : Surface
 
     def __init__(self, x, y, img) -> None:
         super().__init__(x, y)
@@ -97,3 +109,6 @@ class Image(Component):
 
     def set_img(self, img):
         self.__img = img
+
+    def onclick(self, x, y):
+        return False

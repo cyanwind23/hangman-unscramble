@@ -107,7 +107,7 @@ def init_hangman_screen():
     btn_height = 50
     y = 20
     hangman_screen = []
-    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Hangman"))
+    hangman_screen.append(Label(cfg.WIN_WIDTH / 2, y, cfg.color.BLACK, TEXT_FONT, "Hangman"))
     hangman_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
     hangman_screen.append(Image(100, 100, pygame.image.load(cfg.IMG_PATH + f"hangman{hangman_status}.png")))
     hangman_screen.append(update_hangman_guessed())
@@ -125,7 +125,7 @@ def init_hangman_screen():
     return hangman_screen
 
 def init_unscramble_screen():
-    global word_bank, hint_bank, unscramble_ans, unscramble_hint, unscramble_guessed
+    global word_bank, unscramble_ans, unscramble_hint, unscramble_guessed
 
     unscramble_ans = choice(word_bank)
     unscramble_guessed = []
@@ -192,6 +192,7 @@ def handle_on_click(x, y, screen):
     global hangman_status, hangman_ans, hangman_guessed
     global unscramble_ans, unscramble_guessed, unscramble_selected_btn
 
+    # logic Hangman game
     if curr_screen == HANGMAN_SCREEN:
         for component in screen:
             if component.onclick(x, y):
@@ -224,8 +225,9 @@ def handle_on_click(x, y, screen):
             screens[FINAL_SCREEN] = init_final_screen("You lose. Thanks for playing!", HANGMAN_SCREEN)
         
         if curr_screen == FINAL_SCREEN:
-            pygame.time.delay(500)
+            pygame.time.delay(1000)
     
+    # logic Unscramble game
     elif curr_screen == UNSCRAMBLE_SCREEN:
         
         for component in screen:
@@ -270,11 +272,6 @@ def handle_on_click(x, y, screen):
                 if curr_screen == UNSCRAMBLE_SCREEN:
                     screens[UNSCRAMBLE_SCREEN] = init_unscramble_screen()
     
-    else:
-        for component in screen:
-            if component.onclick(x, y):
-                curr_screen = component.get_intent()
-
 
 # main
 init_game()
