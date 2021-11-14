@@ -1,7 +1,8 @@
 import pygame
 import math
+from abc import ABC, abstractmethod
 
-class Component:
+class Component(ABC):
     _x = 0
     _y = 0
     _visible = True
@@ -11,8 +12,13 @@ class Component:
         self._y = y
         self._visible = True
 
+    @abstractmethod
     def onclick(self, x, y):
-        return False
+        pass
+
+    @abstractmethod
+    def draw(self, window):
+        pass
 
 class Button(Component):
     _text = ""
@@ -68,6 +74,9 @@ class Label(Component):
     def get_text(self):
         return self.__text
     
+    def onclick(self, x, y):
+        return False
+    
 class CircleButton(Button):
     __radius = 0
 
@@ -97,3 +106,6 @@ class Image(Component):
 
     def set_img(self, img):
         self.__img = img
+
+    def onclick(self, x, y):
+        return False
