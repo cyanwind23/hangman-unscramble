@@ -107,7 +107,7 @@ def init_hangman_screen():
     btn_height = 50
     y = 20
     hangman_screen = []
-    hangman_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y, cfg.color.BLACK, TEXT_FONT, "Hangman"))
+    hangman_screen.append(Label(cfg.WIN_WIDTH / 2, y, cfg.color.BLACK, TEXT_FONT, "Hangman"))
     hangman_screen.append(Button(10, y / 2, btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "BACK", MAIN_SCREEN))
     hangman_screen.append(Image(100, 100, pygame.image.load(cfg.IMG_PATH + f"hangman{hangman_status}.png")))
     hangman_screen.append(update_hangman_guessed())
