@@ -67,7 +67,7 @@ def init_main_screen():
     x = cfg.WIN_WIDTH / 2 - btn_width - btn_gap / 2
     y = cfg.WIN_HEIGHT / 2
     main_screen.append(Button(240, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Hangman", HANGMAN_SCREEN))
-    main_screen.append(Button(570, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Unscamble", UNSCRAMBLE_SCREEN))
+    main_screen.append(Button(570, y - (btn_height / 2), btn_width, btn_height, cfg.color.BLACK, TEXT_FONT, "Unscramble", UNSCRAMBLE_SCREEN))
     main_screen.append(Label(cfg.WIN_WIDTH / 2 - 125, y - 150, cfg.color.BLACK, BIG_TEXT_FONT, "2 in 1 Game"))
     
     return main_screen
