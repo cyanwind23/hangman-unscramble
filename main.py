@@ -170,7 +170,10 @@ def init_final_screen(msg, from_screen):
     if (from_screen == HANGMAN_SCREEN):
         final_screen.append(Label(cfg.WIN_WIDTH / 2 - 300, cfg.WIN_HEIGHT / 2 - 125, cfg.color.BLACK, TEXT_FONT, msg + " Do you want to play again?"))
     elif (from_screen == UNSCRAMBLE_SCREEN):
-        final_screen.append(Label(cfg.WIN_WIDTH / 2 - 300, cfg.WIN_HEIGHT / 2 - 125, cfg.color.BLACK, TEXT_FONT, msg))
+        if (msg[:7] == "You win"):
+            final_screen.append(Label(cfg.WIN_WIDTH / 2 - 150, cfg.WIN_HEIGHT / 2 - 125, cfg.color.BLACK, TEXT_FONT, msg))
+        else:
+            final_screen.append(Label(cfg.WIN_WIDTH / 2 - 300, cfg.WIN_HEIGHT / 2 - 125, cfg.color.BLACK, TEXT_FONT, msg))
         final_screen.append(Label(cfg.WIN_WIDTH / 2 - 150, cfg.WIN_HEIGHT / 2 - 100, cfg.color.BLACK, TEXT_FONT, " Do you want to play again?"))
 
     return final_screen
